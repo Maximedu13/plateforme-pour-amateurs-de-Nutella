@@ -1,0 +1,29 @@
+* {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.navbar-brand img {
+    width: 50px;
+}
+
+.col-lg-4 img{
+    width: 70%;
+}
+
+#services{
+    margin: 5% 0 5% 0;
+}
+
+#contact *{
+    color: white;
+}
+
+.nav-item ::placeholder{
+    font-style: italic;
+}
+.masthead ::placeholder{
+    font-style: italic;
+}
