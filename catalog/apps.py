@@ -5,3 +5,4 @@ class CatalogConfig(AppConfig):
     name = 'catalog'
 
 
+

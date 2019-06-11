@@ -15,21 +15,25 @@ ALBUMS = [
 
 # Create your models here.
 
-class Account(models.Model):
-    name_user = models.CharField(max_length=200, unique=True)
-    email = models.EmailField(max_length=100)
-
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.CharField(max_length=1000)
-    nutriscore = models.IntegerField(null=False)
+    nutriscore = models.CharField(max_length=1)
     stores = models.CharField(max_length=200, null=False)
     image = models.URLField(null=False, default='image')
     brand = models.CharField(max_length=100, null=False)
+    calories = models.IntegerField(null=True)
+    lipids = models.FloatField(null=True)
+    sugars = models.FloatField(null=True)
+    proteins = models.FloatField(null=True)
+    salts = models.FloatField(null=True)
     url_off = models.URLField(null=False)
 
     def __str__(self):

@@ -1,0 +1,21 @@
+<section id="connexion" class="text-center d-flex">
+    <div class="container my-auto">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <h3 class="border-bottom mb-4">Se connecter</h3>
+                <div class="fieldWrapper my-label">
+                    <label for="{{ form.username.id_for_label }}">Nom d'utilisateur</label>
+                    {{ form_1.user }}
+                </div>
+                <div class="fieldWrapper my-label">
+                    <label for="{{ form.password.id_for_label }}">Mot de passe</label>
+                    {{ form_1.mdp }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Connexion</button>
+            </div>
+        </form>
+    </div>
+</section>

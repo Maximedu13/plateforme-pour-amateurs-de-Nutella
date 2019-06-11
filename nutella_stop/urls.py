@@ -17,10 +17,14 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from catalog import views
+from django.urls import path
+
+app_name = 'nutella_stop'
 
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^catalog/', include('catalog.urls')),
+    path('', views.index, name='index'),
+    path('', include('catalog.urls', namespace='catalog')),
+    url(r'^account/', include('account.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 

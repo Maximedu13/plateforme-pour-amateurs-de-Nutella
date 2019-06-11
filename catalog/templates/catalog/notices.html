@@ -1,0 +1,72 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+{% block content %}
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-baseline">
+                <h2 class="text-white-75 font-weight-light mb-5">Mentions légales
+                </h2>
+            </div>
+        </div>
+    </div>
+</header>
+<section id="services">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0">Généralités</h2>
+                <hr class="divider my-4">
+                <p class="text-muted mb-5">Le site est réalisé dans le cadre du projet 8 de la formation de développeur
+                    Python sur <a href="https://openclassrooms.com/" target="_blank">OpenClassrooms</a>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0">Contact</h2>
+                <hr class="divider my-4">
+                <p class="text-muted mb-5">Colette et Rémy.</p>
+                <p class="text-muted mb-5">Téléphone: 00.00.00.00.00</p>
+                <p class="text-muted mb-5">E-mail: <a href="mailto:contact@yourwebsite.com">purbeurre@purbeurre.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0">Hébergement du site</h2>
+                <hr class="divider my-4">
+                <p class="text-muted mb-5">Le site est hébergé sur le serveur <a
+                        href="https://dashboard.heroku.com/apps" target="_blank">Heroku</a>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0">Droits d'auteur</h2>
+                <hr class="divider my-4">
+            </div>
+            <div class="col-lg-8 text-center">
+                <p class="text-muted mb-5">Template Bootstrap utilisé : <a
+                        href="https://startbootstrap.com/themes/creative/" target="_blank">Creative</a>.</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for key, value in d.items %}
+            <div class="col-lg-6 col-md-6 text-center">
+                <div class="service-box mt-5 mx-auto">
+                    <img src="{% static 'catalog/img/' %}{{ key }}" height="180" alt="picture">
+                    {% autoescape off %}
+                    <p class="mb-3">{{value}}</p>
+                    {% endautoescape %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -25,13 +25,14 @@ SECRET_KEY = 'vjb3mq*q*e1*&1z+3kl*^*77!^9r-q-n&z26v(xp4cjbt^pj3z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =  []
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 INTERNAL_IPS = ['127.0.0.1']

@@ -1,0 +1,13 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'catalog/head.html' %}
+
+<body id="page-top">
+    {% include 'catalog/header.html' %}
+    <!-- Masthead -->
+    {% block content %}{% endblock %}
+    {% include 'catalog/footer.html' %}
+</body>
+
+</html>
