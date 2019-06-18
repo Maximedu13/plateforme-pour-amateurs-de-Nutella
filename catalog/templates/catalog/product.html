@@ -1,7 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load static %}
 {% block content %}
-
 {% autoescape off %}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script>
@@ -31,94 +30,115 @@
             <div class="col-lg-8 text-center">
             </div>
         </div>
-        {{ this_product.nutriscore }}
-        <ul class="list-group">
-            <li class="list-group-item">Repères nutritionnels pour 100g.</li>
-            <li class="list-group-item list-group-item-danger">{{ this_product.formatted_calories }}
-                <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="160"></div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="30" aria-valuemin="160" aria-valuemax="560"></div>
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="20" aria-valuemin="560" aria-valuemax="800"></div>
-                </div>
-                <div class="progress">
-                    <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
-                        style="width: {{ calories_percentage }}"></div>
-                    <p>▲{{ this_product.calories }} </p>
-                </div>
-                <div class="label-txt">{{ result_nutri_score_cal }}</div>
-            </li>
-            <li class="list-group-item list-group-item-danger">{{ this_product.formatted_proteins }}
-                <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="8"></div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="30" aria-valuemin="8" aria-valuemax="12"></div>
-                    <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="20" aria-valuemin="12" aria-valuemax="16"></div>
-                </div>
-                <div class="progress">
-                    <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
-                        style="width: {{ proteins_percentage }}"></div>
-                    <p>▲{{ this_product.proteins }} </p>
-                </div>
-                <div class="label-txt">{{ result_nutri_score_pro }}</div>
-            </li>
+        <div class="products">
+            <img class="img-fluid"
+                src='https://static.openfoodfacts.org/images/misc/nutriscore-{{ this_product.nutriscore|lower }}.svg'>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">Repères nutritionnels pour 100g.</li>
+                <li class="list-group-item list-group-item-danger">{{ this_product.formatted_calories }}
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="15" aria-valuemin="0" aria-valuemax="160"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="30" aria-valuemin="160" aria-valuemax="560"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="20" aria-valuemin="560" aria-valuemax="800"></div>
+                    </div>
+                    <div class="progress">
+                        <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{ calories_percentage }}"></div>
+                        <p>▲{{ this_product.calories }} </p>
+                    </div>
+                    <div class="label-txt">{{ result_nutri_score_cal }}</div>
+                </li>
+                <li class="list-group-item list-group-item-danger">{{ this_product.formatted_proteins }}
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="15" aria-valuemin="0" aria-valuemax="8"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="30" aria-valuemin="8" aria-valuemax="12"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="20" aria-valuemin="12" aria-valuemax="16"></div>
+                    </div>
+                    <div class="progress">
+                        <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{ proteins_percentage }}"></div>
+                        <p>▲{{ this_product.proteins }} </p>
+                    </div>
+                    <div class="label-txt">{{ result_nutri_score_pro }}</div>
+                </li>
 
-            <li class="list-group-item list-group-item-danger">{{ this_product.formatted_lipids }}
-                <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
-                        style="width:{{ lipids_percentage }}"></div>
-                    <p>▲{{ this_product.lipids }} </p>
-                </div>
+                <li class="list-group-item list-group-item-danger">{{ this_product.formatted_lipids }}
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="progress">
+                        <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
+                            style="width:{{ lipids_percentage }}"></div>
+                        <p>▲{{ this_product.lipids }} </p>
+                    </div>
 
-                <div class="label-txt">{{ result_nutri_score_lpds }}</div>
+                    <div class="label-txt">{{ result_nutri_score_lpds }}</div>
 
-            </li>
+                </li>
 
-            <li class="list-group-item list-group-item-danger">{{ this_product.formatted_salts }}
-                <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
-                        style="width: {{ salts_percentage }}"></div>
-                    <p>▲{{ this_product.salts  }} </p>
-                </div>
-                <div class="label-txt"> {{ result_nutri_score_salts }}</div>
-            </li>
-            <li class="list-group-item list-group-item-danger">{{ this_product.formatted_sugars }}
-                <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
-                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="progress">
-                    <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
-                        style="width: {{ sugars_percentage }}"></div>
-                    <p>▲{{ this_product.sugars  }} </p>
-                </div>
-                <div class="label-txt"> {{ result_nutri_score_sugars }}</div>
-            </li>
-        </ul>
+                <li class="list-group-item list-group-item-danger">{{ this_product.formatted_salts }}
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="progress">
+                        <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{ salts_percentage }}"></div>
+                        <p>▲{{ this_product.salts  }} </p>
+                    </div>
+                    <div class="label-txt"> {{ result_nutri_score_salts }}</div>
+                </li>
+                <li class="list-group-item list-group-item-danger">{{ this_product.formatted_sugars }}
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: calc(100% / 3)"
+                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="progress">
+                        <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"
+                            style="width: {{ sugars_percentage }}"></div>
+                        <p>▲{{ this_product.sugars  }} </p>
+                    </div>
+                    <div class="label-txt"> {{ result_nutri_score_sugars }}</div>
+                </li>
+                <li class="list-group-item list-group-item-success">Autres informations</li>
+                <li class="list-group-item list-group-item-danger">
+                    {% if this_product.brand %}
+                    Marque : {{ this_product.brand }}
+                    {% else %}
+                    Marque : Non renseigné
+                    {% endif %}
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    {% if this_product.stores %}
+                    Magasins : {{ this_product.stores }}
+                    {% else %}
+                    Magasins : Non renseigné
+                    {% endif %}
+                </li>
+                <li class="list-group-item list-group-item-danger"> Catégorie : {{ this_product.category }}</li>
+            </ul>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ this_product.url_off }}" role="button"
+                target="_blank">Voir la fiche Openfoodfacts du produit</a>
+        </div>
     </div>
 </section>
 {% endblock %}

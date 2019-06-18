@@ -8,6 +8,7 @@ from django.template import loader
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.template.defaulttags import register
 from .models import *
+import json
 
 
 @register.filter
@@ -43,6 +44,24 @@ def notices(request):
 
 def index(request):
     template = loader.get_template('catalog/index.html')
+    return HttpResponse(template.render(request=request))
+
+def autocomplete(request):
+    if request.is_ajax():
+    	query = request.GET.get('term', '')
+    	products = Product.objects.filter(name__icontains=query).order_by('id')[:10]
+    	results = []
+    	for p in products:
+		    product_dict = {}
+		    product_dict = p.name
+		    results.append(product_dict)
+    	data = json.dumps(results)
+    else:
+	    data = 'fail'
+    return HttpResponse(data, 'application/json')
+
+def substitute(request):
+    template = loader.get_template('catalog/substitute.html')
     return HttpResponse(template.render(request=request))
 
 def search(request):

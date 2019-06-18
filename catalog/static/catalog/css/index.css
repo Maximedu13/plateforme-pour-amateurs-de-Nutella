@@ -76,11 +76,21 @@
 }
 
 .list-group{
-    width: 60%;
+    width: 70%;
+
 }
 .progress-bar-transparent{
     background-color: #f5c6cb;
 }
 .progress:nth-child(2n){
     background-color: #f5c6cb;
+}
+.container .products img{
+    margin-right: 7%;
+}
+.container .productsimg, .container .products .list-group{
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 5%;
+    text-align: center;
 }
