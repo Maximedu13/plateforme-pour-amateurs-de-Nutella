@@ -10,15 +10,15 @@ from django.template.defaulttags import register
 from .models import *
 import json
 
+from django.template.defaulttags import register
 
 @register.filter
 def get_range(value):
-    return range(value)
+    return range(1, value)
 
 def catalog(request):
     message = "Salut tout le monde !"
     return HttpResponse(message)
-
 
 def notices(request):
     template = loader.get_template('catalog/notices.html')
@@ -62,7 +62,48 @@ def autocomplete(request):
 
 def substitute(request):
     template = loader.get_template('catalog/substitute.html')
-    return HttpResponse(template.render(request=request))
+    query = request.GET.get('query')
+    insert()
+    infos = Product.objects.filter(name=query)
+    categories = Category.objects.all()
+    global info
+    for info in infos:
+        pass
+    for category in categories:
+        pass
+
+    subs = Product.objects.filter(category_id=info.category_id, nutriscore="A")
+    if not subs:
+        subs = Product.objects.filter(category_id=info.category_id, nutriscore="B")
+    if not subs:
+        subs = Product.objects.filter(category_id=info.category_id, nutriscore="C")
+
+    for sub in subs:
+        pass
+
+    paginator = Paginator(subs, 12)
+    num_pages = paginator.num_pages + 1
+    print(num_pages)
+    page = request.GET.get('page')
+    try:
+        albums = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        albums = paginator.page(1)
+        print("lol")
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        albums = paginator.page(paginator.num_pages)
+    substitutes = {
+        'query' : query,
+        'info' : info,
+        'categories' : categories,
+        'subs' : subs,
+        'albums': albums,
+        'num_pages': num_pages,
+        'paginate': True
+    }
+    return HttpResponse(template.render(substitutes, request=request))
 
 def search(request):
     template = loader.get_template('catalog/search.html')

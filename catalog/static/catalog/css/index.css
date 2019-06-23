@@ -94,3 +94,14 @@
     margin-bottom: 5%;
     text-align: center;
 }
+
+.pagination{
+    background-color: #4CAF50;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.pagination a{
+    color: white;
+    text-decoration: none;
+    
+}
