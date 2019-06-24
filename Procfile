@@ -1,1 +1,1 @@
-web: gunicorn nutella_stop.wsgi
+web: gunicorn nutella_stop:app
