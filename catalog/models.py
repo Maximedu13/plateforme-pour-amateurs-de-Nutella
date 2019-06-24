@@ -1,23 +1,10 @@
 from django.db import models
-ARTISTS = {
-  'francis-cabrel': {'name': 'Francis Cabrel'},
-  'lej': {'name': 'Elijay'},
-  'rosana': {'name': 'Rosana'},
-  'maria-dolores-pradera': {'name': 'María Dolores Pradera'},
-}
-
-
-ALBUMS = [
-  {'name': 'Sarbacane', 'artists': [ARTISTS['francis-cabrel']]},
-  {'name': 'La Dalle', 'artists': [ARTISTS['lej']]},
-  {'name': 'Luna Nueva', 'artists': [ARTISTS['rosana'], ARTISTS['maria-dolores-pradera']]}
-]
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
-
     def __str__(self):
         return self.name
 
@@ -38,3 +25,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+

@@ -1,20 +1,21 @@
-
-import requests
+""" algorithm to insert the products """
 import json
 import re
+import requests
 from catalog.models import Category, Product
 
 def insert():
-        global categories, category
-        categories = ['Huile d‘olive d‘Aix-en-Provence', 'Sauces au roquefort', 'Œufs', 'Beurres', \
-        'Muffins au chocolat', 'Bœuf', 'Beurres de cacahuètes', 'Saumons', 'Croissants au beurre']
-        for category in categories:
-                Category.objects.get_or_create(name=category)
+    global categories, category
+    categories = ['Huile d‘olive d‘Aix-en-Provence', 'Sauces au roquefort', 'Œufs', 'Beurres', \
+    'Muffins au chocolat', 'Bœuf', 'Beurres de cacahuètes', 'Saumons', 'Croissants au beurre']
+    for category in categories:
+        Category.objects.get_or_create(name=category)
         cats = Category.objects.all()
         formatted_cats = ["{}".format(cat.name) for cat in cats]
-        """
-        for cat in formatted_cats:
-                r = requests.get("https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0= \
+
+        """for cat in formatted_cats:
+                r = requests.get\
+                        ("https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0= \
                         categories&tag_contains_0=contains&tag_0=" + cat + \
                         "&sort_by=unique_scans_n&page_size=1000&axis_x=energy&axis_y=products_n&action= \
                         display&json=1")

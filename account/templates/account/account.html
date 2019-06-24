@@ -1,5 +1,4 @@
 {% extends 'catalog/base.html' %}
-
 {% block content %}
 <header class="masthead">
   <div class="container h-100">
@@ -11,10 +10,10 @@
     </div>
   </div>
 </header>
-<br/>
+<br />
 <div class="d-flex justify-content-around">
-{% include 'account/login.html' %}
-{% include 'account/register.html' %}
+  {% include 'account/login.html' %}
+  {% include 'account/register.html' %}
 </div>
-<br/>
+<br />
 {% endblock %}

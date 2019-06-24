@@ -1,5 +1,5 @@
 {% extends 'catalog/base.html' %}
-
+{% load static %}
 {% block content %}
 <header class="masthead">
     <div class="container h-100">
@@ -11,7 +11,14 @@
         </div>
     </div>
 </header>
-<br />
-Votre e-mail est : {{ user.email }}
-<br />
+<section id="services">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <img src="{% static 'catalog/img/ratatouille-portrait.jpg' %}" class="img-fluid" alt="Responsive image">
+                <h2 class="mt-0">Vous êtes connecté(e) avec l'adresse e-mail : <em>{{ user.email }}</em></h2>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

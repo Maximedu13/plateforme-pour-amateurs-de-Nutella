@@ -56,9 +56,14 @@
                         <p><a href="{% url 'catalog:detail' album.id %}" class="btn btn-info btn-xs" role="button">En
                                 savoir plus sur l'aliment</a>
                             <br />
-                        {% if user.is_authenticated %}
-                            <a href="" class="btn btn-default btn-xs" role="button"><i class="fa fa-floppy-o"
-                                    aria-hidden="true"> Sauvegarder </i></a></p>
+                            {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'catalog:favorite' album.id  %}">
+                                {% csrf_token %}
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i><input class="btn btn-default btn-xs"
+                                    type="submit" value="Sauvegarder" id="{{ album.id }}" title="{{ album.id }}">
+                            </form>
+                        </p>
+
                         {% endif %}
                     </div>
                 </div>

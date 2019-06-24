@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.template.defaulttags import register
 from .models import *
 import json
-
+from django.shortcuts import render, redirect
 from django.template.defaulttags import register
 
 @register.filter
@@ -48,14 +48,14 @@ def index(request):
 
 def autocomplete(request):
     if request.is_ajax():
-    	query = request.GET.get('term', '')
-    	products = Product.objects.filter(name__icontains=query).order_by('id')[:10]
-    	results = []
-    	for p in products:
-		    product_dict = {}
-		    product_dict = p.name
-		    results.append(product_dict)
-    	data = json.dumps(results)
+        query = request.GET.get('term', '')
+        products = Product.objects.filter(name__icontains=query).order_by('id')[:10]
+        results = []
+        for p in products:
+            product_dict = {}
+            product_dict = p.name
+            results.append(product_dict)
+        data = json.dumps(results)
     else:
 	    data = 'fail'
     return HttpResponse(data, 'application/json')
@@ -83,14 +83,12 @@ def substitute(request):
 
     paginator = Paginator(subs, 12)
     num_pages = paginator.num_pages + 1
-    print(num_pages)
     page = request.GET.get('page')
     try:
         albums = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
         albums = paginator.page(1)
-        print("lol")
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         albums = paginator.page(paginator.num_pages)
@@ -104,6 +102,13 @@ def substitute(request):
         'paginate': True
     }
     return HttpResponse(template.render(substitutes, request=request))
+
+def favorite(request, id):
+    message = "Produit ajouté aux favoris"
+    current_user = request.user
+    Favorite.objects.get_or_create(user_id=current_user.id, product_id=id)
+    return redirect('index')
+    return HttpResponse(message)
 
 def search(request):
     template = loader.get_template('catalog/search.html')
@@ -168,13 +173,13 @@ def product(request, product_id):
     id = int(product_id) # make sure we have an integer.
     this_product = Product.objects.get(pk=id)
     this_product.proteins = this_product.proteins.__round__ (2)
-    this_product.formatted_proteins = "Protéines : {} g/100g".format(this_product.proteins.__round__ (2))
-    this_product.formatted_calories = "Calories : {} kCal/100g".format(this_product.calories.__round__ (2))
-    this_product.salts = this_product.salts.__round__ (2)
+    this_product.formatted_proteins = "Protéines : {} g/100g".format(this_product.proteins.__round__(2))
+    this_product.formatted_calories = "Calories : {} kCal/100g".format(this_product.calories.__round__(2))
+    this_product.salts = this_product.salts.__round__(2)
     this_product.formatted_salts = "Sel : {} g/100g".format(this_product.salts)
-    this_product.formatted_lipids = "Lipides : {} g/100g".format(this_product.lipids.__round__ (2))
+    this_product.formatted_lipids = "Lipides : {} g/100g".format(this_product.lipids.__round__(2))
     this_product.sugars = this_product.sugars.__round__ (2)
-    this_product.formatted_sugars = "Sucres : {} g/100g".format(this_product.sugars.__round__ (2))
+    this_product.formatted_sugars = "Sucres : {} g/100g".format(this_product.sugars.__round__(2))
     
     salts_percentage = this_product.salts * 100 / 2.3
     salts_percentage = str(salts_percentage) + "%"
@@ -197,7 +202,7 @@ def product(request, product_id):
     adjective_proteins = "protéiné"
     adjective_lipids = "lipidique"
 
-    if this_product.calories < 560 /3 :
+    if this_product.calories < 560 /3:
         result_nutri_score_cal = low + space + adjective_calories
     elif this_product.calories >= 560 / 3 and this_product.calories <= 560 / 2:
         result_nutri_score_cal = medium + space + adjective_calories
