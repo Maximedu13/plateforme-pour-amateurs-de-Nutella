@@ -22,8 +22,8 @@ def catalog(request):
 
 def notices(request):
     template = loader.get_template('catalog/notices.html')
-    files = [f for f in listdir('catalog/static/catalog/img') if \
-    isfile(join('catalog/static/catalog/img', f))]
+    files = [f for f in listdir('staticfiles/catalog/img') if \
+    isfile(join('staticfiles/catalog/img', f))]
     print(files)
     content_picture = ["Fond d‘écran de la bannière par \
     <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>", \
