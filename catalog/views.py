@@ -22,8 +22,8 @@ def catalog(request):
 
 def notices(request):
     template = loader.get_template('catalog/notices.html')
-    files = [f for f in listdir('staticfiles/catalog/img') if \
-    isfile(join('staticfiles/catalog/img', f))]
+    files = sorted([f for f in listdir('staticfiles/catalog/img') if \
+    isfile(join('staticfiles/catalog/img', f))])
     print(files)
     content_picture = [
     "Logo de déconnexion par <a href='https://www.flaticon.com/free-icon/logout_1828490#term=logout&page=1&position=28' target='_blank'>Flaticon</a>",
