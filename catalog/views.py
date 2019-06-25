@@ -27,8 +27,6 @@ def notices(request):
     print(files)
     content_picture = [
     "Logo de déconnexion par <a href='https://www.flaticon.com/free-icon/logout_1828490#term=logout&page=1&position=28' target='_blank'>Flaticon</a>",
-    "Rémy par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>\
-    Pur Beurre - Charte Graphique </a>", 
     "Colette par <a href='http://personnages-disney.com/Page%20Colette.html' target='_blank'>personnages-disney</a>",
     "Logo d‘utilisateur par <a href='https://www.flaticon.com/free-icon/ \
     carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>", 
@@ -39,6 +37,8 @@ def notices(request):
     "Logo de carotte par <a href='https://www.flaticon.com/free-icon/ \
     carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>",
     "Fond d‘écran de la bannière par <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>", 
+    "Rémy par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>\
+    Pur Beurre - Charte Graphique </a>", 
     "Colette par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> Pur Beurre - \
     Charte Graphique </a>"
     ]
