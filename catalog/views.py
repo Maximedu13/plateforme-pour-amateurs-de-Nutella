@@ -24,7 +24,6 @@ def notices(request):
     template = loader.get_template('catalog/notices.html')
     files = [f for f in listdir('catalog/static/catalog/img') if \
     isfile(join('catalog/static/catalog/img', f))]
-    files.remove('.DS_Store')
     content_picture = ["Fond d‘écran de la bannière par \
     <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>", \
     "Colette par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> Pur Beurre - \
