@@ -25,6 +25,16 @@
     </div>
 </header>
 <section id="services">
+    {% if info is None %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0"><em>Aucun produit n'a été trouvé pour la requête suivante : {{ message }}</em></h2>
+                <img src="{% static 'catalog/img/Colette Tatou.png' %}">
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">

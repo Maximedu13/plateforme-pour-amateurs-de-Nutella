@@ -11,10 +11,13 @@ from .forms import LoginForm, RegisterForm
 # Create your views here.
 def log_out(request):
     """method to log out the user"""
-    logout(request)
-    messages.success(request, 'Vous avez été déconnecté.')
-    return redirect('index')
-
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, 'Vous avez été déconnecté.')
+        return redirect('index')
+    else:
+        messages.error(request, 'Vous devez être connecté.')
+        return redirect('index')
 
 def account(request):
     """method to log in the user"""
@@ -23,22 +26,21 @@ def account(request):
         # A form bound to the POST data
         form_1 = LoginForm(request.POST)
         form_2 = RegisterForm(request.POST)
-        username = request.POST.get('user')
-        pword = request.POST.get('mdp')
-        mail = request.POST.get('email')
-        user_name = request.POST.get('user_name')
-        password = request.POST.get('password')
-        print(mail, user_name, password)
         # All validation rules pass
-        if form_1.is_valid():
-            # Process the data in form.cleaned_data
-            user = form_1.cleaned_data['user']
-            mdp = form_1.cleaned_data['mdp']
-            user = authenticate(username=user, password=mdp)
-            login(request, user)
-            messages.success(request, 'Vous avez été connecté.')
-            request.session.set_expiry(900)
-            return redirect('index')
+        try:
+            if form_1.is_valid():
+                # Process the data in form.cleaned_data
+                user = form_1.cleaned_data['user']
+                mdp = form_1.cleaned_data['mdp']
+                user = authenticate(username=user, password=mdp)
+                login(request, user)
+                messages.success(request, 'Vous avez été connecté.')
+                request.session.set_expiry(900)
+                return redirect('index')
+        except :
+            messages.error(request, 'Mauvais login/mot de passe.')
+            return redirect('account:index')
+
         if form_2.is_valid():
             print("valid")
             email = form_2.cleaned_data['email']
@@ -48,7 +50,7 @@ def account(request):
                 user = User.objects.create_user(username, mail, raw_password)
                 return redirect('index')
             except:
-                print("lol")
+                pass
     else:
         form_1 = LoginForm() # An unbound form
         form_2 = RegisterForm()
@@ -62,17 +64,26 @@ def account(request):
 def favorites(request):
     """method to add a product to favorite products"""
     template = loader.get_template('account/favorites.html')
-    current_user = request.user
-    favorites = Favorite.objects.filter(user_id=current_user.id).order_by('id')
-    list_of_favorites = []
-    for fav in favorites:
-        list_of_favorites.append(Product.objects.filter(id=fav.product_id))
-    the_favorites = {
-        'list_of_favorites' : list_of_favorites
-    }
-    return HttpResponse(template.render(the_favorites, request=request))
+    if request.user.is_authenticated:
+        current_user = request.user
+        favorites = Favorite.objects.filter(user_id=current_user.id).order_by('id')
+        list_of_favorites = []
+        for fav in favorites:
+            list_of_favorites.append(Product.objects.filter(id=fav.product_id))
+        the_favorites = {
+            'list_of_favorites' : list_of_favorites
+        }
+        return HttpResponse(template.render(the_favorites, request=request))
+    else:
+        messages.error(request, 'Vous devez être connecté pour voir cette page.')
+        return redirect('index')
 
 def profile(request):
     """method to show the user's profile"""
     template = loader.get_template('account/profile.html')
-    return HttpResponse(template.render(request=request))
+    if request.user.is_authenticated:
+        return HttpResponse(template.render(request=request))
+    else:
+        messages.error(request, 'Vous devez être connecté pour voir cette page.')
+        return redirect('index')
+    template = loader.get_template('account/profile.html')

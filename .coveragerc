@@ -1,0 +1,2 @@
+[run]
+omit = *tests*, nutella_stop/settings.py, manage.py
