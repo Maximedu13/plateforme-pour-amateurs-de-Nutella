@@ -42,8 +42,7 @@ def account(request):
             return redirect('account:index')
 
         if form_2.is_valid():
-            print("valid")
-            email = form_2.cleaned_data['email']
+            mail = form_2.cleaned_data['email']
             username = form_2.cleaned_data['user_name']
             raw_password = form_2.cleaned_data['password']
             try:
