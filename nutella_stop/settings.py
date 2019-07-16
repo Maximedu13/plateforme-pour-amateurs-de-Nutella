@@ -16,6 +16,14 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY', 'c@n%u@91tum=@j392g20b8znh7dqfo-v%81))gxbbmu$=dy_*)') # development key for the moment
+
+
+
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -29,12 +37,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'c@n%u@91tum=@j392g20b8znh7dqfo-v%81))gxbbmu$=dy_*)') # development key for the moment
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('ENV') == 'PRODUCTION':
@@ -76,9 +78,11 @@ MIDDLEWARE = [
 
 INTERNAL_IPS = ['127.0.0.1']
 
-# SESSION AGE 1 Minutes
-SESSION_COOKIE_AGE = 1*60
+# SESSION AGE 3 Minutes
+SESSION_COOKIE_AGE = 3*60
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'nutella_stop.urls'
 
