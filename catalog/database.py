@@ -13,7 +13,7 @@ def insert():
         Category.objects.get_or_create(name=category)
         cats = Category.objects.all()
         formatted_cats = ["{}".format(cat.name) for cat in cats]
-        if bool(list_of_products) is False:
+        if not cats:
             for cat in formatted_cats:
                     r = requests.get\
                             ("https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0= \

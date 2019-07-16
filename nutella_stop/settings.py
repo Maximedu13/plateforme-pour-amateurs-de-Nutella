@@ -23,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'c@n%u@91tum=@j392g20b8znh7dqfo-v%81))gxbbmu$=dy_*)') # development key for the moment
 
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 

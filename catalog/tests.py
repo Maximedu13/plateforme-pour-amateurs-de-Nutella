@@ -104,7 +104,7 @@ class DetailPageTestCase(TestCase):
         for c in cat:
             pass
         global categories
-        categories = ['A CATEGORY', 'B CATEGORY', 'Saumons']
+        categories = ['A CATEGORY', 'B CATEGORY', 'Noisettes']
         for category in categories:
             regex(category, c.name)
         self.assertEqual(categories.index(category), 2)

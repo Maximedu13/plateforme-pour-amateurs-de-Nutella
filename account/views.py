@@ -47,18 +47,20 @@ def account(request):
             raw_password = form_2.cleaned_data['password']
             try:
                 user = User.objects.create_user(username, mail, raw_password)
+                messages.success(request, 'Votre compte a été crée.')
                 return redirect('index')
             except:
-                pass
+                messages.error(request, 'Votre compte n‘a pas été crée.')
+                return redirect('account:index')
     else:
-        form_1 = LoginForm() # An unbound form
+        form_1 = LoginForm() 
         form_2 = RegisterForm()
 
-
-    return render(request, 'account/account.html', {
+    forms = {
         'form_1': form_1,
         'form_2': form_2,
-    })
+    }
+    return HttpResponse(template.render(forms, request=request))
 
 def favorites(request):
     """method to add a product to favorite products"""
@@ -85,4 +87,3 @@ def profile(request):
     else:
         messages.error(request, 'Vous devez être connecté pour voir cette page.')
         return redirect('index')
-    template = loader.get_template('account/profile.html')

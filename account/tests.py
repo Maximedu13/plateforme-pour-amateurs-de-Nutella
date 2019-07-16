@@ -5,7 +5,6 @@ from catalog.views import Favorite, Product, Category
 from catalog.tests import DetailPageTestCase
 # Create your tests here.
 
-
 class PageTestCase(TestCase):
     def test_index_page(self):
         response = self.client.get(reverse('index'))
@@ -17,11 +16,11 @@ class PageTestCase(TestCase):
 
     def test_favorites_page(self):
         response = self.client.get(reverse('account:favorites'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
     
     def test_profile_page(self):
         response = self.client.get(reverse('account:profile'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 class StatusTestCase(TestCase):
     def test_login(self):
@@ -52,4 +51,4 @@ class Favorites(TestCase):
             pass
         list_of_favorites = ['Huile de foie de morue', 'Saumon d‘Alaska', 'SOMETHING_WITH_NUTRI_SCORE_A']
         self.favorite = Favorite.objects.create(product_id=t.id, user_id=5)
-        self.assertIn(t.name, list_of_favorites) 
+        self.assertIn(t.name, list_of_favorites)

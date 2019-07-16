@@ -7,7 +7,6 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.template.defaulttags import register
 from .models import *
 import json
 from django.shortcuts import render, redirect
@@ -18,29 +17,31 @@ def get_range(value):
     return range(1, value)
 
 def catalog(request):
-    message = "Salut tout le monde !"
-    return HttpResponse(message)
+    return redirect('index')
 
 def notices(request):
     template = loader.get_template('catalog/notices.html')
     files = sorted([f for f in listdir('staticfiles/catalog/img') if \
     isfile(join('staticfiles/catalog/img', f))])
     content_picture = [
-    "Emoticone triste par <a href='https://www.flaticon.com/free-icon/crying_136366#term=cry&page=1&position=13' target='_blank'>Flaticon</a>", 
-    "Colette par <a href='http://personnages-disney.com/Page%20Colette.html' target='_blank'>personnages-disney</a>",
-    "Logo de carotte par <a href='https://www.flaticon.com/free-icon/ \
-    carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>",
-    "Colette par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> Pur Beurre - \
-    Charte Graphique </a>",
-    "Logo de Pur Beurre par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>Pur Beurre - \
-    Charte Graphique </a>", 
-    "Logo de déconnexion par <a href='https://www.flaticon.com/free-icon/logout_1828490#term=logout&page=1&position=28' target='_blank'>Flaticon</a>",
-    "Favicon logo Pur Beurre par <a href='https://www.favicon-generator.org/'>favicon-generator</a>", 
-    "Fond d‘écran de la bannière par <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>", 
-    "Rémy par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>\
-    Pur Beurre - Charte Graphique </a>",
-    "Logo d‘utilisateur par <a href='https://www.flaticon.com/free-icon/ \
-    carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>"
+        "Emoticone triste par \
+        <a href='https://www.flaticon.com/free-icon/crying_136366#term=cry&page=1&position=13' \
+        target='_blank'>Flaticon</a>",
+        "Colette par <a href='http://personnages-disney.com/Page%20Colette.html' \
+        target='_blank'>personnages-disney</a>",
+        "Logo de carotte par <a href='https://www.flaticon.com/free-icon/ \
+        carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>",
+        "Colette par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/ \
+        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> Pur Beurre - Charte Graphique </a>",
+        "Logo de Pur Beurre par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/ \
+        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>Pur Beurre - Charte Graphique </a>",
+        "Logo de déconnexion par <a href='https://www.flaticon.com/free-icon/logout_1828490#term=logout&page=1&position=28' \
+        target='_blank'>Flaticon</a>",
+        "Favicon logo Pur Beurre par <a href='https://www.favicon-generator.org/'>favicon-generator</a>",
+        "Fond d‘écran de la bannière par <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>",
+        "Rémy par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' \
+        target='_blank'> Pur Beurre - Charte Graphique </a>", "Logo d‘utilisateur par <a href='https://www.flaticon.com/free-icon/ \
+        carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>"
     ]
     d = {x:y for x, y in zip(files, content_picture)}
     context = {
@@ -78,11 +79,14 @@ def substitute(request):
         pass
     if info is not None:
         try:
-            subs = Product.objects.filter(category_id=info.category_id, nutriscore="A").order_by('id')
+            subs = Product.objects.filter(category_id=info.category_id,
+                                          nutriscore="A").order_by('id')
             if not subs:
-                subs = Product.objects.filter(category_id=info.category_id, nutriscore="B").order_by('id')
+                subs = Product.objects.filter(category_id=info.category_id,
+                                              nutriscore="B").order_by('id')
             if not subs:
-                subs = Product.objects.filter(category_id=info.category_id, nutriscore="C").order_by('id')
+                subs = Product.objects.filter(category_id=info.category_id,
+                                              nutriscore="C").order_by('id')
             for sub in subs:
                 pass
             paginator = Paginator(subs, 12)
@@ -96,7 +100,6 @@ def substitute(request):
             # If page is out of range (e.g. 9999), deliver last page of results.
             albums = paginator.page(paginator.num_pages)
 
-        
     substitutes = {
         'query' : query,
         'infos' : infos,
