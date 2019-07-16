@@ -43,11 +43,13 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
+    #SECURE_SSL_REDIRECT = False
 else:
     DEBUG = True
+    #SECURE_SSL_REDIRECT = False
 
 ALLOWED_HOSTS = ['nutella-stop.herokuapp.com', '127.0.0.1']
-
+SECURE_SSL_REDIRECT = False
 
 # Application definition
 
@@ -81,8 +83,6 @@ INTERNAL_IPS = ['127.0.0.1']
 # SESSION AGE 3 Minutes
 SESSION_COOKIE_AGE = 3*60
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'nutella_stop.urls'
 
