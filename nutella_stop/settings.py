@@ -43,10 +43,8 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
     db_from_env = dj_database_url.config(conn_max_age=500)
     DATABASES['default'].update(db_from_env)
-    SECURE_SSL_REDIRECT = True
 else:
     DEBUG = True
-    SECURE_SSL_REDIRECT = False
 
 ALLOWED_HOSTS = ['nutella-stop.herokuapp.com', '127.0.0.1']
 
