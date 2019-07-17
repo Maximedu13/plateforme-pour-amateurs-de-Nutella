@@ -12,7 +12,7 @@
     </div>
 </header>
 <section id="services">
-    {% if not albums %}
+    {% if not r_r %}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
@@ -24,29 +24,29 @@
     {% endif %}
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-            {% for album in albums %}
+            {% for r in r_r %}
             <div class="col-xs-18 col-sm-6 col-md-3">
                 <div class="thumbnail">
                     <div class="caption">
-                        <span class="{{ album.nutriscore }}">{{ album.nutriscore }}</span>
-                        <img src="{{ album.image }}" height="200" width="100%">
-                        <h4>{{ album.name }}</h4>
-                        {% if album.description %}
+                        <span class="{{ r.nutriscore }}">{{ r.nutriscore }}</span>
+                        <img src="{{ r.image }}" height="200" width="100%">
+                        <h4>{{ r.name }}</h4>
+                        {% if r.description %}
                         <b>
-                            <p><em>{{ album.description }}</em></p>
+                            <p><em>{{ r.description }}</em></p>
                         </b>
                         {% else %}
                         <b><em>Pas de description disponible </em></b><img src="{% static 'catalog/img/136366.svg' %}"
                             height="30">
                         <br />
                         {% endif %}
-                        <p><a href="{% url 'catalog:detail' album.id %}" class="btn btn-info btn-xs" role="button">En
+                        <p><a href="{% url 'catalog:detail' r.id %}" class="btn btn-info btn-xs" role="button">En
                                 savoir plus sur l'aliment</a>
                             {% if user.is_authenticated %}
-                            <form method="post" action="{% url 'catalog:favorite' album.id  %}">
+                            <form method="post" action="{% url 'catalog:favorite' r.id  %}">
                                 {% csrf_token %}
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i><input class="btn btn-default btn-xs"
-                                    type="submit" value="Sauvegarder" id="{{ album.id }}" title="{{ album.id }}">
+                                    type="submit" value="Sauvegarder" id="{{ r.id }}" title="{{ r.id }}">
                             </form>
                         </p>
                         {% endif %}
@@ -61,8 +61,7 @@
         <ul class="pagination">
             {% for i in num_pages|get_range %}
             <li><a href="?page={{ i }}">{{ i }}</a></li>
-            {% endfor %}
-            
+            {% endfor %} 
         </ul>
         {% endif %}
     </div>

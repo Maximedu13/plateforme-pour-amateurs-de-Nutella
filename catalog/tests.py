@@ -22,7 +22,7 @@ class PageTestCase(TestCase):
     def test_search_page(self):
         """test the search page"""
         response = self.client.get(reverse('catalog:search'), {
-            'query': 'Oeufs',
+            'query_one': 'Oeufs',
             })
         self.assertEqual(response.status_code, 200)
 
@@ -63,7 +63,7 @@ class DetailPageTestCase(TestCase):
     def test_substitute_page(self):
         """test substitute page"""
         response = self.client.get(reverse('catalog:search-a-substitute'),
-                                   {'query': 'SOMETHING_WITH_NUTRI_SCORE_A',})
+                                   {'query_two': 'SOMETHING_WITH_NUTRI_SCORE_A',})
         self.assertEqual(response.status_code, 200)
 
     def test_not_existing_substitute_page(self):
@@ -97,7 +97,7 @@ class DetailPageTestCase(TestCase):
     def test_search_returns_200(self):
         """test search 200"""
         example = str('SOMETHING_WITH_NUTRI_SCORE_A')
-        response = self.client.get(reverse('catalog:search'), {'query': example,})
+        response = self.client.get(reverse('catalog:search'), {'query_one': example,})
         self.assertEqual(response.status_code, 200)
 
     def test_regex_id(self):

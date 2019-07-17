@@ -67,8 +67,8 @@ def index(request):
 def autocomplete(request):
     """autocomplete ajax"""
     if request.is_ajax():
-        query = request.GET.get('term', '')
-        products = Product.objects.filter(name__icontains=query).order_by('id')[:10]
+        query_autocomplete = request.GET.get('term', '')
+        products = Product.objects.filter(name__icontains=query_autocomplete).order_by('id')[:10]
         results = []
         global data
         for p in products:
@@ -83,42 +83,44 @@ def autocomplete(request):
 def substitute(request):
     """substitute page"""
     template = loader.get_template('catalog/substitute.html')
-    query = request.GET.get('query')
-    infos = Product.objects.filter(name=query)
+    query_two = None
+    query_two = request.GET.get('query_two')
+    query_two_infos = Product.objects.filter(name=query_two)
     categories = Category.objects.all()
-    global info
-    for info in infos:
+    global q_2
+    for q_2 in query_two_infos:
         pass
-    if info is not None:
-        try:
-            subs = Product.objects.filter(category_id=info.category_id,
-                                          nutriscore="A").order_by('id')
-            if not subs:
-                subs = Product.objects.filter(category_id=info.category_id,
-                                              nutriscore="B").order_by('id')
-            if not subs:
-                subs = Product.objects.filter(category_id=info.category_id,
-                                              nutriscore="C").order_by('id')
-            for sub in subs:
-                pass
-            paginator = Paginator(subs, 12)
-            num_pages = paginator.num_pages + 1
-            page = request.GET.get('page')
-            albums = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            albums = paginator.page(1)
-        except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            albums = paginator.page(paginator.num_pages)
+    try:
+        if q_2 is not None:
+            try:
+                subs = Product.objects.filter(category_id=q_2.category_id,
+                                              nutriscore="A").order_by('id')
+                if not subs:
+                    subs = Product.objects.filter(category_id=q_2.category_id,
+                                                  nutriscore="B").order_by('id')
+                if not subs:
+                    subs = Product.objects.filter(category_id=q_2.category_id,
+                                                  nutriscore="C").order_by('id')
+                paginator = Paginator(subs, 12)
+                num_pages = paginator.num_pages + 1
+                page = request.GET.get('page')
+                p_p = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                p_p = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                p_p = paginator.page(paginator.num_pages)
+    except:
+        messages.error(request, 'Ceci n‘est pas un produit. Veuillez réessayer')
+        return redirect('index')
 
     substitutes = {
-        'query' : query,
-        'infos' : infos,
-        'info' : info,
+        'query_two' : query_two,
+        'q_2' : q_2,
         'categories' : categories,
         'subs' : subs,
-        'albums': albums,
+        'p_p': p_p,
         'num_pages': num_pages,
         'paginate': True
     }
@@ -134,34 +136,39 @@ def favorite(request, id):
 def search(request):
     """search page"""
     template = loader.get_template('catalog/search.html')
-    if request.GET.get('query') is not None:
-        global query
-        query = request.GET.get('query')
-    infos = Product.objects.filter(name__contains=query).order_by('id')
-    message = "{}".format(query)
+    if request.GET.get('query_one') is not None:
+        global query_one
+        query_one = request.GET.get('query_one')
+    query_one_infos = Product.objects.filter(name__contains=query_one).order_by('id')
+    message = "{}".format(query_one)
     categories = Category.objects.all()
-    global info
-    for info in infos:
+    global q_1
+    for q_1 in query_one_infos:
         pass
-    paginator = Paginator(infos, 12)
-    num_pages = paginator.num_pages + 1
-    page = request.GET.get('page')
     try:
-        albums = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        albums = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        albums = paginator.page(paginator.num_pages)
-    message = {
-        'message' : message,
-        'categories' : categories,
-        'infos' : infos,
-        'albums': albums,
-        'num_pages': num_pages,
-        'paginate': True
-    }
+        if q_1 is not None:
+            paginator = Paginator(query_one_infos, 12)
+            num_pages = paginator.num_pages + 1
+            page = request.GET.get('page')
+            try:
+                r_r = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                r_r = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                r_r = paginator.page(paginator.num_pages)
+            message = {
+                'message' : message,
+                'categories' : categories,
+                'q_1' : q_1,
+                'r_r': r_r,
+                'num_pages': num_pages,
+                'paginate': True
+            }
+    except:
+        messages.error(request, 'Ceci n‘est pas un produit. Veuillez réessayer')
+        return redirect('index')
     return HttpResponse(template.render(message, request=request))
 
 def product(request, product_id):

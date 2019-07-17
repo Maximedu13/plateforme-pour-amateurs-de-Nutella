@@ -7,7 +7,7 @@
     $(document).ready(function () {
         ;
         $('header').css('background',
-            'linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),url({{ info.image }})');
+            'linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),url({{ q_2.image }})');
         $('header').css('background-repeat', 'repeat');
         $('header').css('opacity', '1.1');
     });
@@ -18,14 +18,14 @@
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-8 align-self-baseline">
-                <h2 class="text-white-75 font-weight-light mb-5">{{ info.name }}
+                <h2 class="text-white-75 font-weight-light mb-5">{{ q_2.name }}
                 </h2>
             </div>
         </div>
     </div>
 </header>
 <section id="services">
-    {% if info is None %}
+    {% if not q_2 %}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
@@ -38,7 +38,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <em>{{ info.name }} a un nutriscore <b>{{ info.nutriscore }}</b></em>
+                <em>{{ q_2.name }} a un nutriscore <b>{{ q_2.nutriscore }}</b></em>
                 <h2 class="mt-0">Vous pouvez remplacer cet aliment par :</h2>
                 <hr class="divider my-4">
                 <p class="text-muted mb-5"></p>
@@ -47,30 +47,30 @@
     </div>
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-            {% for album in albums %}
+            {% for p in p_p %}
             <div class="col-xs-18 col-sm-6 col-md-3">
                 <div class="thumbnail">
                     <div class="caption">
-                        <span class="{{ album.nutriscore }}">{{ album.nutriscore }}</span>
-                        <img src="{{ album.image }}" height="200" width="100%">
-                        <h4>{{ album.name }}</h4>
-                        {% if album.description %}
+                        <span class="{{ p.nutriscore }}">{{ p.nutriscore }}</span>
+                        <img src="{{ p.image }}" height="200" width="100%">
+                        <h4>{{ p.name }}</h4>
+                        {% if p.description %}
                         <b>
-                            <p><em>{{ album.description }}</em></p>
+                            <p><em>{{ p.description }}</em></p>
                         </b>
                         {% else %}
                         <b><em>Pas de description disponible </em></b><img src="{% static 'catalog/img/136366.svg' %}"
                             height="30">
                         <br />
                         {% endif %}
-                        <p><a href="{% url 'catalog:detail' album.id %}" class="btn btn-info btn-xs" role="button">En
+                        <p><a href="{% url 'catalog:detail' p.id %}" class="btn btn-info btn-xs" role="button">En
                                 savoir plus sur l'aliment</a>
                             <br />
                             {% if user.is_authenticated %}
-                            <form method="post" action="{% url 'catalog:favorite' album.id  %}">
+                            <form method="post" action="{% url 'catalog:favorite' p.id  %}">
                                 {% csrf_token %}
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i><input class="btn btn-default btn-xs"
-                                    type="submit" value="Sauvegarder" id="{{ album.id }}" title="{{ album.id }}">
+                                    type="submit" value="Sauvegarder" id="{{ p.id }}" title="{{ p.id }}">
                             </form>
                         </p>
 
