@@ -5,6 +5,7 @@ from django.test import TestCase
 from nutella_stop.wsgi import get_wsgi_application, application, os_environ, os
 from .database import regex, results
 from .models import Product, Category
+# pylint: disable=no-member
 
 # Create your tests here.
 class PageTestCase(TestCase):

@@ -83,8 +83,9 @@ def autocomplete(request):
 def substitute(request):
     """substitute page"""
     template = loader.get_template('catalog/substitute.html')
-    query_two = None
-    query_two = request.GET.get('query_two')
+    if request.GET.get('query_two') is not None:
+        global query_two
+        query_two = request.GET.get('query_two')
     query_two_infos = Product.objects.filter(name=query_two)
     categories = Category.objects.all()
     global q_2
