@@ -6,10 +6,9 @@ import json
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import redirect
 from django.template.defaulttags import register
-from .models import Product, Favorite, Category
+from .models import Product, Favorite
 from .database import insert, results
 # pylint: disable=no-member
 
