@@ -81,7 +81,7 @@
             {% endfor %}
         </div>
         <br />
-        {% if paginate %}
+        {% if paginate and num_pages > 2 %}
         <p>Page</p>
         <ul class="pagination">
             {% for i in num_pages|get_range %}

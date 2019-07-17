@@ -115,7 +115,7 @@ def substitute(request):
     except:
         messages.error(request, 'Ceci n‘est pas un produit. Veuillez réessayer')
         return redirect('index')
-
+    print(num_pages)
     substitutes = {
         'query_two' : query_two,
         'q_2' : q_2,
