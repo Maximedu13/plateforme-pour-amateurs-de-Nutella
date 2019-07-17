@@ -2,11 +2,12 @@
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.template import loader
 from django.contrib.auth.models import User
 from catalog.models import Favorite, Product
 from .forms import LoginForm, RegisterForm
+# pylint: disable=no-member
 
 # Create your views here.
 def log_out(request):
@@ -37,7 +38,7 @@ def account(request):
                 messages.success(request, 'Vous avez été connecté.')
                 request.session.set_expiry(900)
                 return redirect('index')
-        except :
+        except:
             messages.error(request, 'Mauvais login/mot de passe.')
             return redirect('account:index')
 
@@ -53,7 +54,7 @@ def account(request):
                 messages.error(request, 'Votre compte n‘a pas été crée.')
                 return redirect('account:index')
     else:
-        form_1 = LoginForm() 
+        form_1 = LoginForm()
         form_2 = RegisterForm()
 
     forms = {

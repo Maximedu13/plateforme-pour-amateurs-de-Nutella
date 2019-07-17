@@ -1,25 +1,29 @@
-"""views.py"""
+"""views.py app catalog"""
 # Create your views here.
 from os import listdir
 from os.path import isfile, join
-from .database import insert, results
+import json
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .models import *
-import json
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.template.defaulttags import register
+from .models import Product, Favorite, Category
+from .database import insert, results
+# pylint: disable=no-member
 
 @register.filter
 def get_range(value):
+    """range method"""
     return range(1, value)
 
 def catalog(request):
+    """catalog"""
     return redirect('index')
 
 def notices(request):
+    """notices page"""
     template = loader.get_template('catalog/notices.html')
     files = sorted([f for f in listdir('staticfiles/catalog/img') if \
     isfile(join('staticfiles/catalog/img', f))])
@@ -32,16 +36,21 @@ def notices(request):
         "Logo de carotte par <a href='https://www.flaticon.com/free-icon/ \
         carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>",
         "Colette par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/ \
-        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> Pur Beurre - Charte Graphique </a>",
-        "Logo de Pur Beurre par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/ \
-        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>Pur Beurre - Charte Graphique </a>",
-        "Logo de déconnexion par <a href='https://www.flaticon.com/free-icon/logout_1828490#term=logout&page=1&position=28' \
-        target='_blank'>Flaticon</a>",
-        "Favicon logo Pur Beurre par <a href='https://www.favicon-generator.org/'>favicon-generator</a>",
-        "Fond d‘écran de la bannière par <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>",
-        "Rémy par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/pur-beurre-style-guide#/introduction/Notre-identité' \
-        target='_blank'> Pur Beurre - Charte Graphique </a>", "Logo d‘utilisateur par <a href='https://www.flaticon.com/free-icon/ \
-        carrot_1041355#term=carrot&page=1&position=22' target='_blank'>Flaticon</a>"
+        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> Pur Beurre - \
+        Charte Graphique </a>", "Logo de Pur Beurre par \
+        <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/ \
+        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'>\
+        Pur Beurre - Charte Graphique </a>", "Logo de déconnexion par \
+        <a href='https://www.flaticon.com/free-icon/logout_1828490#term=logout&page=1&position=28' \
+        target='_blank'>Flaticon</a>", "Favicon logo Pur Beurre par \
+        <a href='https://www.favicon-generator.org/'>favicon-generator</a>",
+        "Fond d‘écran de la bannière par \
+        <a href='https://unsplash.com/photos/eqsEZNCm4-c' target='_blank'> Olenka Kotyk</a>",
+        "Rémy par <a href='https://company-82435.frontify.com/d/6Yy9WFJdtp8j/ \
+        pur-beurre-style-guide#/introduction/Notre-identité' target='_blank'> \
+        Pur Beurre - Charte Graphique </a>", "Logo d‘utilisateur par \
+        <a href='https://www.flaticon.com/free-icon/carrot_1041355#term=carrot&page=1&position=22' \
+        target='_blank'>Flaticon</a>"
     ]
     d = {x:y for x, y in zip(files, content_picture)}
     context = {
@@ -50,11 +59,13 @@ def notices(request):
     return HttpResponse(template.render(context, request=request))
 
 def index(request):
+    """index page"""
     template = loader.get_template('catalog/index.html')
     insert()
     return HttpResponse(template.render(request=request))
 
 def autocomplete(request):
+    """autocomplete ajax"""
     if request.is_ajax():
         query = request.GET.get('term', '')
         products = Product.objects.filter(name__icontains=query).order_by('id')[:10]
@@ -66,10 +77,11 @@ def autocomplete(request):
             results.append(product_dict)
         data = json.dumps(results)
     else:
-	    data = 'fail'
+        data = 'fail'
     return HttpResponse(data, 'application/json')
 
 def substitute(request):
+    """substitute page"""
     template = loader.get_template('catalog/substitute.html')
     query = request.GET.get('query')
     infos = Product.objects.filter(name=query)
@@ -113,12 +125,14 @@ def substitute(request):
     return HttpResponse(template.render(substitutes, request=request))
 
 def favorite(request, id):
+    """favorite add"""
     messages.success(request, 'Le produit a été ajouté à vos favoris.')
     current_user = request.user
     Favorite.objects.get_or_create(user_id=current_user.id, product_id=id)
     return redirect('index')
 
 def search(request):
+    """search page"""
     template = loader.get_template('catalog/search.html')
     if request.GET.get('query') is not None:
         global query
@@ -151,10 +165,8 @@ def search(request):
     return HttpResponse(template.render(message, request=request))
 
 def product(request, product_id):
+    """product page"""
     template = loader.get_template('catalog/product.html')
-    # make sure we have an integer.
-    id = int(product_id)
     results(product_id)
     message = results(product_id)
     return HttpResponse(template.render(message, request=request))
-
