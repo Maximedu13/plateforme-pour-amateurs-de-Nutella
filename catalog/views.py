@@ -88,7 +88,6 @@ def substitute(request):
         query_two = request.GET.get('query_two')
     query_two_infos = Product.objects.filter(name=query_two)
     categories = Category.objects.all()
-    global q_2
     for q_2 in query_two_infos:
         pass
     try:
@@ -139,11 +138,9 @@ def search(request):
     if request.GET.get('query_one') is not None:
         global query_one
         query_one = request.GET.get('query_one')
-    print(query_one)
     query_one_infos = Product.objects.filter(name__contains=query_one).order_by('id')
     message = "{}".format(query_one)
     categories = Category.objects.all()
-    global q_1
     for q_1 in query_one_infos:
         pass
     try:
