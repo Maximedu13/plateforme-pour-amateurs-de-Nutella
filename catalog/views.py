@@ -115,11 +115,10 @@ def substitute(request):
     except:
         messages.error(request, 'Ceci n‘est pas un produit. Veuillez réessayer')
         return redirect('index')
-    print(num_pages)
+    global substitutes
     substitutes = {
         'query_two' : query_two,
         'q_2' : q_2,
-        'categories' : categories,
         'subs' : subs,
         'p_p': p_p,
         'num_pages': num_pages,
@@ -140,6 +139,7 @@ def search(request):
     if request.GET.get('query_one') is not None:
         global query_one
         query_one = request.GET.get('query_one')
+    print(query_one)
     query_one_infos = Product.objects.filter(name__contains=query_one).order_by('id')
     message = "{}".format(query_one)
     categories = Category.objects.all()
