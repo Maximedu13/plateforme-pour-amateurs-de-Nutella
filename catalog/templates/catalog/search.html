@@ -12,7 +12,7 @@
     </div>
 </header>
 <section id="services">
-    {% if not r_r %}
+    {% if not query_one_infos %}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
@@ -24,8 +24,8 @@
     {% endif %}
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-            {% for r in r_r %}
-            <div class="col-xs-18 col-sm-6 col-md-3">
+            {% for r in query_one_infos %}
+            <div class="col-xs-18 col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <div class="caption">
                         <span class="{{ r.nutriscore }}">{{ r.nutriscore }}</span>
@@ -56,14 +56,6 @@
             {% endfor %}
         </div>
         <br />
-        {% if paginate and num_pages > 2 %}
-        <p>Page</p>
-        <ul class="pagination">
-            {% for i in num_pages|get_range %}
-            <li><a href="?page={{ i }}">{{ i }}</a></li>
-            {% endfor %} 
-        </ul>
-        {% endif %}
     </div>
 </section>
 {% endblock %}

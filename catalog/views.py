@@ -88,30 +88,19 @@ def substitute(request):
     if request.GET.get('query_two') is not None:
         query_two = request.GET.get('query_two')
     query_two_infos = Product.objects.filter(name=query_two)
-    categories = Category.objects.all()
+    global q_2
     for q_2 in query_two_infos:
         pass
     try:
         if q_2 is not None:
-            try:
+            subs = Product.objects.filter(category_id=q_2.category_id,
+                                          nutriscore="A").order_by('id')
+            if not subs:
                 subs = Product.objects.filter(category_id=q_2.category_id,
-                                              nutriscore="A").order_by('id')
-                if not subs:
-                    subs = Product.objects.filter(category_id=q_2.category_id,
-                                                  nutriscore="B").order_by('id')
-                if not subs:
-                    subs = Product.objects.filter(category_id=q_2.category_id,
-                                                  nutriscore="C").order_by('id')
-                paginator = Paginator(subs, 12)
-                num_pages = paginator.num_pages + 1
-                page = request.GET.get('page')
-                p_p = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                p_p = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                p_p = paginator.page(paginator.num_pages)
+                                              nutriscore="B").order_by('id')
+            if not subs:
+                subs = Product.objects.filter(category_id=q_2.category_id,
+                                              nutriscore="C").order_by('id')
     except:
         messages.error(request, 'Ceci n‘est pas un produit. Veuillez réessayer')
         return redirect('index')
@@ -120,9 +109,6 @@ def substitute(request):
         'query_two' : query_two,
         'q_2' : q_2,
         'subs' : subs,
-        'p_p': p_p,
-        'num_pages': num_pages,
-        'paginate': True
     }
     return HttpResponse(template.render(substitutes, request=request))
 
@@ -141,34 +127,12 @@ def search(request):
         query_one = request.GET.get('query_one')
     query_one_infos = Product.objects.filter(name__contains=query_one).order_by('id')
     message = "{}".format(query_one)
-    categories = Category.objects.all()
-    for q_1 in query_one_infos:
-        pass
-    try:
-        if q_1 is not None:
-            paginator = Paginator(query_one_infos, 12)
-            num_pages = paginator.num_pages + 1
-            page = request.GET.get('page')
-            try:
-                r_r = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                r_r = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                r_r = paginator.page(paginator.num_pages)
-            message = {
-                'message' : message,
-                'categories' : categories,
-                'q_1' : q_1,
-                'r_r': r_r,
-                'num_pages': num_pages,
-                'paginate': True
-            }
-    except:
-        messages.error(request, 'Ceci n‘est pas un produit. Veuillez réessayer')
-        return redirect('index')
-    return HttpResponse(template.render(message, request=request))
+    global msg
+    msg = {
+        'message' : message,
+        'query_one_infos' : query_one_infos,
+    }
+    return HttpResponse(template.render(msg, request=request))
 
 def product(request, product_id):
     """product page"""

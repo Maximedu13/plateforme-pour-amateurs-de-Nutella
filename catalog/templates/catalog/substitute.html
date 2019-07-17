@@ -12,7 +12,6 @@
         $('header').css('opacity', '1.1');
     });
 </script>
-
 {% endautoescape %}
 <header class="masthead">
     <div class="container h-100">
@@ -47,8 +46,8 @@
     </div>
     <div class="container" id="tourpackages-carousel">
         <div class="row">
-            {% for p in p_p %}
-            <div class="col-xs-18 col-sm-6 col-md-3">
+            {% for p in subs %}
+            <div class="col-xs-18 col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <div class="caption">
                         <span class="{{ p.nutriscore }}">{{ p.nutriscore }}</span>
@@ -81,14 +80,6 @@
             {% endfor %}
         </div>
         <br />
-        {% if paginate and num_pages > 2 %}
-        <p>Page</p>
-        <ul class="pagination">
-            {% for i in num_pages|get_range %}
-            <li><a href="?page={{ i }}">{{ i }}</a></li>
-            {% endfor %}
-            {% endif %}
-        </ul>
     </div>
 </section>
 {% endblock %}
